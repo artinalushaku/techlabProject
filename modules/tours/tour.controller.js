@@ -10,9 +10,19 @@ export const createTour = async (req, res) => {
       city,
       price,
       averageReating,
-      image,
       createdBy,
     } = req.body;
+
+    const image = req.file ? req.file.path : null;
+    console.log(image, "image controller");
+
+    // let image
+    // if(req.file) {
+    //   image = req.file.path
+    // } else {
+    //   image = null
+    // }
+
     const tour = new Tour({
       title: title,
       description,
@@ -71,7 +81,8 @@ export const updateTour = async (req, res) => {
     if (country) tour.country = country;
     if (city) tour.city = city;
     if (price) tour.price = price;
-    if (image) tour.image = image;
+    const image = req.file ? req.file.path : null;
+    tour.image = image;
 
     await tour.save();
 
