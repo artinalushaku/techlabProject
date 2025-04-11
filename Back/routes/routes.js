@@ -3,6 +3,7 @@ import userRoutes from "../modules/users/users.routes.js";
 import tourRoutes from "../modules/tours/tour.routes.js";
 import bookingRouters from "../modules/bookings/booking.routes.js";
 import authRouters from "../modules/auth/auth.routes.js";
+import reviewRoutes from "../modules/reviews/reviews.routes.js";
 
 const router = express.Router();
 
@@ -10,5 +11,6 @@ router.use("/users", userRoutes);
 router.use("/tours", tourRoutes);
 router.use("/bookings", bookingRouters);
 router.use("/auth", authRouters);
+router.use("/reviews", reviewRoutes);
 
 export default router;
