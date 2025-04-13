@@ -10,6 +10,7 @@ import {
 import { useState, useEffect } from "react";
 import Login from "./pages/login/Login";
 import Tours from "./pages/tours/Tours";
+import TourDetails from "./pages/tours/TourDetails";
 import Bookings from "./pages/bookings/Bookings";
 
 // Placeholder components (replace with real ones)
@@ -74,6 +75,7 @@ function App() {
             element={<Login onLogin={() => setLoggedIn(true)} />}
           />
           <Route path="/tours" element={<Tours />} />
+          <Route path="/tours/:id" element={<TourDetails />} />
 
           {/* Private Routes */}
           <Route

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "../styles/Tours.module.css";
 import BookingModal from "./BookingModal";
 
 const TourCard = ({ tour }) => {
   const [showBookingModal, setShowBookingModal] = useState(false);
-  const { title, country, city, location, averageReating, price, image } = tour;
+  const { _id, title, country, city, location, averageRating, price, image } = tour;
+  const navigate = useNavigate();
 
   const fullImageUrl = image?.startsWith("uploads")
     ? `http://localhost:3000/${image}`
@@ -13,6 +15,10 @@ const TourCard = ({ tour }) => {
   const handleBookingSuccess = () => {
     // You can add a toast notification here
     console.log("Booking successful!");
+  };
+
+  const handleViewDetails = () => {
+    navigate(`/tours/${_id}`);
   };
 
   return (
@@ -31,15 +37,25 @@ const TourCard = ({ tour }) => {
               <br />
               <strong>Location:</strong> {location}
               <br />
-              <strong>Rating:</strong> {averageReating} ⭐<br />
+              <strong>Rating:</strong> {averageRating || "N/A"} {averageRating ? "⭐" : ""}
+              <br />
               <strong>Price:</strong> ${price}
             </p>
-            <button
-              className={styles.btn}
-              onClick={() => setShowBookingModal(true)}
-            >
-              Book
-            </button>
+            <div style={{ display: "flex", gap: "10px" }}>
+              <button
+                className={styles.btn}
+                onClick={handleViewDetails}
+                style={{ backgroundColor: "rgba(0, 0, 0, 0.15)" }}
+              >
+                View Details
+              </button>
+              <button
+                className={styles.btn}
+                onClick={() => setShowBookingModal(true)}
+              >
+                Book
+              </button>
+            </div>
           </div>
         </div>
       </li>
