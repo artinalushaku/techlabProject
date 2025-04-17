@@ -42,10 +42,27 @@ export const createTour = async (req, res) => {
 };
 
 export const getTours = async (req, res) => {
+  console.log(req.query, "query");
+  const { page, limit, search, location } = req.query; // Added location
+  const pageNumber = Number(page);
+  const lim = Number(limit); // Fixed typo: 'Limit' to 'limit'
+  const skip = (pageNumber - 1) * lim;
+  let filter = {};
+
+  if (search) {
+    filter.title = { $regex: search, $options: "i" };
+  }
+
+  if (location) {
+    filter.location = { $regex: location, $options: "i" }; // Added location filter
+  }
+
   try {
-    const tours = await Tour.find()
+    const tours = await Tour.find(filter) // Applied filter
       .populate("createdBy", "firstName lastName")
-      .populate("reviews.user", "firstName lastName");
+      .populate("reviews.user", "firstName lastName")
+      .skip(skip)
+      .limit(lim);
     res.status(200).json(tours);
   } catch (error) {
     console.log(error, "errorrr");
